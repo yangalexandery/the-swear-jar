@@ -2,11 +2,11 @@
 "name": "Swear Jar",
 "version": "1.0",
 "description": "Don't swear",
-"permissions": ["activeTab", "declarativeContent", "storage", "notifications", "storage"],
+"permissions": ["activeTab", "declarativeContent", "storage", "webRequest", "*://*/*", "notifications"],
 "options_page": "options.html",
 "background": {
   "scripts": ["background.js"],
-  "persistent": false
+  "persistent": true
 },
 "page_action": {
   "default_popup": "popup.html",
