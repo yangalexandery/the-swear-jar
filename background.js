@@ -20,15 +20,16 @@ rawFile.open("GET", "bad-boys.txt", true);
 var allSwears = [];
 rawFile.onreadystatechange = function() {
 	if (rawFile.readyState === 4) {
-	  	allSwears = rawFile.responseText.split("\n");
+	  	allSwears = rawFile.responseText.split(",");
 	  	if (allSwears[allSwears.length - 1].length === 0) {
-	  		allswears.splice(allSwears.length - 1, 1);
+	  		allSwears.splice(allSwears.length - 1, 1);
 		}
 	}
 }
 rawFile.send();
 
 var countNumSwears = function(targetString) {
+	console.log("countNumSwears: " + targetString);
 	var count = 0;
 
 	for (i in allSwears) {
@@ -55,6 +56,8 @@ var searchForSwears = function(targetObj) {
 		var targetText = targetObj[keys[i]];
 		if (typeof targetText === typeof "foo") {
 			tot = Math.max(tot, countNumSwears(targetText));
+		} else if (typeof targetText === "object") {
+			tot = Math.max(tot, searchForSwears(targetText));
 		}
 	}
 	// for (i in keys) {
@@ -84,12 +87,12 @@ var parseQueryString = function(targetText) {
 }
 
 chrome.runtime.onInstalled.addListener(function() {
-	chrome.storage.sync.set({user_venmo_account: ""}, function() {
-		console.log('venmo username set as: ');
+	chrome.storage.sync.set({user_paypal_account: ""}, function() {
+		console.log('user paypal username set as: ');
 	});
 
-	chrome.storage.sync.set({developer_venmo: "lulu_guo1123"}, function() {
-		console.log('developer venmo username set as: lulu_guo1123');
+	chrome.storage.sync.set({developer_paypal: "lulu_guo1123"}, function() {
+		console.log('developer paypal username set as: lulu_guo1123');
 	});
 
 	chrome.storage.sync.set({color: '#3aa757'}, function() {
@@ -120,30 +123,26 @@ chrome.runtime.onInstalled.addListener(function() {
   			var tot = 0;
   			if ('requestBody' in details) {
   				if ('formData' in details.requestBody) {
-  					// console.log("Form data: ")
 					var possibleSwears = details.requestBody.formData
-					// console.log(possibleSwears);
-  					tot = Math.max(tot, searchForSwears(possibleSwears));
+					tot = Math.max(tot, searchForSwears(possibleSwears));
   				} else if ('raw' in details.requestBody) {
   					var possibleSwears = parseRawData(details.requestBody.raw);
-  					// console.log("Form data: ")
-  					// console.log(possibleSwears);
-  					tot = Math.max(tot, searchForSwears(possibleSwears));
+					tot = Math.max(tot, searchForSwears(possibleSwears));
   				}
   			}
-  			if ('url' in details && details.type === "main_frame") {
-  				// console.log("URL params: ")
-  				var possibleSwears = parseQueryString(details.url);
-  				// console.log(possibleSwears.entries());
-  				tot = Math.max(tot, searchForSwears(possibleSwears));
-  			}
-  			if (tot > 0) {
-  				console.log(tot + " swears detected!");
-  				swears = chrome.storage.sync.get(['num_swears'], function(result) {
-  					var newValue = result.num_swears + tot;
-  					chrome.storage.sync.set({'num_swears': newValue}, function(){});
-  				})
-  			}
+			if ('url' in details && details.type === "main_frame") {
+               // console.log("URL params: ")
+               var possibleSwears = parseQueryString(details.url);
+               // console.log(possibleSwears.entries());
+               tot = Math.max(tot, searchForSwears(possibleSwears));
+	        }
+            if (tot > 0) {
+                console.log(tot + " swears detected!");
+                swears = chrome.storage.sync.get(['num_swears'], function(result) {
+	                var newValue = result.num_swears + tot;
+	                chrome.storage.sync.set({'num_swears': newValue}, function(){});
+	            });
+            }
   		},
 	  	{urls: ["<all_urls>"]},
 	  	["requestBody"]
