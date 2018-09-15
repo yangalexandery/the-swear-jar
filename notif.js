@@ -18,9 +18,9 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
     console.log("Number of new swears: " + inc_result);
     chrome.notifications.create(opt);
   }
-  if (storageChange.newValue>=8){
+  if (storageChange.newValue>=2){
     chrome.storage.sync.set({sworeTooManyTimes: true}, function() {
-      // console.log('user paypal username set as: ');
+    console.log('YOU SWORE TOO MANY TIMES');
     });
   }
   else{
