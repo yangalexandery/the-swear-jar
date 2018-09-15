@@ -29,20 +29,21 @@ rawFile.onreadystatechange = function() {
 rawFile.send();
 
 var countNumSwears = function(targetString) {
-	console.log("countNumSwears: " + targetString);
+	var lowerCaseString = targetString.toLowerCase()
+	console.log("countNumSwears: " + lowerCaseString);
 	var count = 0;
 
 	for (i in allSwears) {
 		var pos = 0;
 		var swear = allSwears[i];
-		while (pos < targetString.length) {
-			var index = targetString.indexOf(swear, pos);
-			// pos = targetString.length;
+		while (pos < lowerCaseString.length) {
+			var index = lowerCaseString.indexOf(swear, pos);
+			// pos = lowerCaseString.length;
 			if (index >= 0) {
 				count++;
 				pos = index + swear.length;
 			} else {
-				pos = targetString.length;
+				pos = lowerCaseString.length;
 			}
 		}
 	}
