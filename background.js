@@ -148,14 +148,24 @@ chrome.runtime.onInstalled.addListener(function() {
 	  	["requestBody"]
 	);
 
+	// chrome.extension.onRequest.addListener(function(request, sender) {
+ //    chrome.tabs.update(sender.tab.id, {url: "https://www.google.com/maps"});
+	// });
+
+
 	chrome.webRequest.onBeforeRequest.addListener(
   		function(details){
+  			var redirect;
+  			
   			chrome.storage.sync.get(['sworeTooManyTimes'], function(result){
-  				if(result.sworeTooManyTimes){
-  					return {redirectURL: "swearingisbad.html"};
-  				}
+  				redirect = result.sworeTooManyTimes
   			});
+
+  			if(redirect === true){
+  				return {redirectUrl:  chrome.extension.getURL("swearingisbad.html")};
+  			}
   		},
-	  	{urls: ["<all_urls>"]}
+	  	{urls: ["<all_urls>"]},
+	  	["blocking"]
 	);
 });
