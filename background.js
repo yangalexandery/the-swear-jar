@@ -147,4 +147,15 @@ chrome.runtime.onInstalled.addListener(function() {
 	  	{urls: ["<all_urls>"]},
 	  	["requestBody"]
 	);
+
+	chrome.webRequest.onBeforeRequest.addListener(
+  		function(details){
+  			chrome.storage.sync.get(['sworeTooManyTimes'], function(result){
+  				if(result.sworeTooManyTimes){
+  					return {redirectURL: "swearingisbad.html"};
+  				}
+  			});
+  		},
+	  	{urls: ["<all_urls>"]}
+	);
 });
