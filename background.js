@@ -14,6 +14,13 @@ var parseRawData = function(data) {
 };
 
 chrome.runtime.onInstalled.addListener(function() {
+	chrome.storage.sync.set({user_venmo_account: ""}, function() {
+		console.log('venmo username set as: ');
+	});
+
+	chrome.storage.sync.set({developer_venmo: "lulu_guo1123"}, function() {
+		console.log('developer venmo username set as: lulu_guo1123');
+	});
 
 	chrome.storage.sync.set({color: '#3aa757'}, function() {
 	  console.log('The color is green.');

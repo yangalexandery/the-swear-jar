@@ -1,21 +1,18 @@
-// Copyright 2018 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+window.addEventListener('load', function load(event){
+	chrome.storage.sync.get(['user_venmo_account'], function(result) {
+		document.getElementById("current_username").innerHTML = "Your venmo account is set as: "+ result.user_venmo_account;
+	});
+	var submit = document.getElementById('venmo_submit_button');
+	submit.addEventListener('click', function(event) {
+		setUserAccount();
+	});
+});
 
-let page = document.getElementById('buttonDiv');
-
-const kButtonColors = ['#3aa757', '#e8453c', '#f9bb2d', '#4688f1'];
-
-function constructOptions(kButtonColors) {
-  for (let item of kButtonColors) {
-    let button = document.createElement('button');
-    button.style.backgroundColor = item;
-    button.addEventListener('click', function() {
-      chrome.storage.sync.set({color: item}, function() {
-        console.log('color is ' + item);
-      })
-    });
-    page.appendChild(button);
-  }
+function setUserAccount(){
+	var username = document.getElementById("set_username").elements[0].value;;
+	chrome.storage.sync.set({user_venmo_account: username}, function() {
+		console.log('venmo username set as: '+ username);
+	});
+	document.getElementById("current_username").innerHTML = "Your venmo account is set as: "+ username;
 }
-constructOptions(kButtonColors);
+
