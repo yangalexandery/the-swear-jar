@@ -139,6 +139,10 @@ chrome.runtime.onInstalled.addListener(function() {
   			}
   			if (tot > 0) {
   				console.log(tot + " swears detected!");
+  				swears = chrome.storage.sync.get(['num_swears'], function(result) {
+  					var newValue = result.num_swears + tot;
+  					chrome.storage.sync.set({'num_swears': newValue}, function(){});
+  				})
   			}
   		},
 	  	{urls: ["<all_urls>"]},
