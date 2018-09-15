@@ -1,3 +1,5 @@
+
+
 var parseRawData = function(data) {
 	// data is 
 	// console.log(data[d]['bytes']);
@@ -22,6 +24,12 @@ chrome.runtime.onInstalled.addListener(function() {
 	chrome.storage.sync.set({num_swears: 0}, function(){
 	  console.log("Number of swears is initialized to 0.");
 	});
+
+	chrome.storage.sync.set({sworeTooManyTimes: false}, function(){
+		console.log("sworeTooManyTimes is initialized to false");
+	});
+
+
 	chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
 	  chrome.declarativeContent.onPageChanged.addRules([{
 	    conditions: [new chrome.declarativeContent.PageStateMatcher({
@@ -31,6 +39,7 @@ chrome.runtime.onInstalled.addListener(function() {
 	        actions: [new chrome.declarativeContent.ShowPageAction()]
 	  }]);
 	});
+	
 	chrome.webRequest.onBeforeRequest.addListener(
   		function(details){
   			// if ('requestBody' in details) {
