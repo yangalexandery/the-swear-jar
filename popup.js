@@ -7,17 +7,25 @@ changeColor.setAttribute('value', data.color);
 changeColor.onclick = function(element) {
 chrome.storage.sync.get(['num_swears'], function(result){
   inc_result = result.num_swears+1;
-  
   chrome.storage.sync.set({num_swears: inc_result}, function(){
   	console.log("Increment number of swears to " + inc_result);
   });
+  if(inc_result>=100){
+  	chrome.storage.sync.set({sworeTooManyTimes: true});
+  }
+  else{
+  	chrome.storage.sync.set({sworeTooManyTimes: false});
+  }
   var opt = {
     type: "basic",
     title: "Not in my Christian browser!",
-    message: "Stop swearing! what the fuck? you swore " + inc_result + " times!",
+    message: "what the fuck? the swear jar is now at $" + (inc_result/100),
     iconUrl: "images/disappoint.jpg"
   }
-  chrome.notifications.create(opt);
+  chrome.notifications.create(opt, function(){
+  	// console.log("finished notifying");
+  	return;
+  });
 });
 
 let color = element.target.value;
