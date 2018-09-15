@@ -18,5 +18,15 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
     console.log("Number of new swears: " + inc_result);
     chrome.notifications.create(opt);
   }
+  if (storageChange.newValue>=8){
+    chrome.storage.sync.set({sworeTooManyTimes: true}, function() {
+      // console.log('user paypal username set as: ');
+    });
+  }
+  else{
+    chrome.storage.sync.set({sworeTooManyTimes:false}, function(){
+
+    });
+  }
 // });
 });
