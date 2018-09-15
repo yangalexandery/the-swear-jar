@@ -157,15 +157,13 @@ chrome.runtime.onInstalled.addListener(function() {
   		function(details){
   			var redirect;
   			
-  			window.href = "https://www.google.com/maps";
   			chrome.storage.sync.get(['sworeTooManyTimes'], function(result){
   				redirect = result.sworeTooManyTimes
   			});
 
   			if(redirect === true){
-  				return {redirectUrl:  chrome.extension.getURL("swearingisbad.html")}
+  				return {redirectUrl:  chrome.extension.getURL("swearingisbad.html")};
   			}
-  		};
   		},
 	  	{urls: ["<all_urls>"]},
 	  	["blocking"]
