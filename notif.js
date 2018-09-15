@@ -14,7 +14,9 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
     message: specific_msg + " you swore " + inc_result + " times! your swear jar balance is now $" + storageChange.newValue/100,
     iconUrl: "images/disappoint.jpg"
   }
-  console.log("Number of new swears: " + inc_result);
-  chrome.notifications.create(opt);
+  if (inc_result > 0) {
+    console.log("Number of new swears: " + inc_result);
+    chrome.notifications.create(opt);
+  }
 // });
 });
