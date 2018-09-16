@@ -32,24 +32,67 @@ var countNumSwears = function(targetString) {
 	var lowerCaseString = targetString.toLowerCase()
 	console.log("countNumSwears: " + lowerCaseString);
 	var count = 0;
+	var compressTargetString = compressString(lowerCaseString)
 
 	for (i in allSwears) {
 		var pos = 0;
 		var swear = allSwears[i];
-		while (pos < lowerCaseString.length) {
-			var index = lowerCaseString.indexOf(swear, pos);
-			// pos = lowerCaseString.length;
-			if (index >= 0) {
-				count++;
-				pos = index + swear.length;
-			} else {
-				pos = lowerCaseString.length;
-			}
-		}
+		count+=containCompress(compressString(allSwears[i]), compressTargetString)
+		// while (pos < lowerCaseString.length) {
+		// 	var index = lowerCaseString.indexOf(swear, pos);
+		// 	// pos = lowerCaseString.length;
+		// 	if (index >= 0) {
+		// 		count++;
+		// 		pos = index + swear.length;
+		// 	} else {
+		// 		pos = lowerCaseString.length;
+		// 	}
+		// }
 	}
 	return count;
 }
 
+var compressString = function(givenString){
+	var compress = [];
+	var count = 0;
+	for(var i = 0; i<givenString.length;i++){
+		if(i==0 || givenString[i]==givenString[i-1]){
+			count++;
+		}
+		else{
+			compress.push({letter: givenString[i-1], number: count});
+			count=1;
+		}
+	}
+	compress.push({letter: givenString[givenString.length-1], number: count});
+	return compress;
+}
+
+var containCompress = function(innerString, outerString){
+	var count = 0;
+	var m = innerString.length;
+	var n = outerString.length;
+	if(m>n){
+		return false;
+	}
+	for(var i =0;i<=n-m;i++){
+		var match = true;
+		for(var j =0;j<m;j++){
+			if(innerString[j].letter!=outerString[i+j].letter){
+				match = false;
+				break;
+			}
+			if(innerString[j].letter>outerString[i+j].letter){
+				match = false;
+				break;
+			}
+		}
+		if(match){
+			count++;
+		}
+	}
+	return count;
+}
 var searchForSwears = function(targetObj) {
 	var tot = 0;
 	var keys = Object.keys(targetObj);
@@ -87,6 +130,7 @@ var parseQueryString = function(targetText) {
 	return body_dict;
 }
 
+var redirect;
 chrome.runtime.onInstalled.addListener(function() {
 	chrome.storage.sync.set({user_paypal_account: ""}, function() {
 		console.log('user paypal username set as: ');
@@ -156,12 +200,10 @@ chrome.runtime.onInstalled.addListener(function() {
 
 	chrome.webRequest.onBeforeRequest.addListener(
   		function(details){
-  			var redirect;
   			
   			chrome.storage.sync.get(['sworeTooManyTimes'], function(result){
   				redirect = result.sworeTooManyTimes
   			});
-
   			if(redirect === true){
   				return {redirectUrl:  chrome.extension.getURL("swearingisbad.html")};
   			}
