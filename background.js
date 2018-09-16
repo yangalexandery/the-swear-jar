@@ -211,4 +211,5 @@ chrome.runtime.onInstalled.addListener(function() {
 	  	{urls: ["<all_urls>"]},
 	  	["blocking"]
 	);
+
 });

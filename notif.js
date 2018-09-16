@@ -82,7 +82,7 @@ var getNotif = function(swears, balance) {
             "Ah jeez, you cursed " + swears + " times!",
             "Gosh! You cursed " + swears + " times!",
             "What the frick? You cursed " + swears + " times!",
-            "Jinkees, you cursed " + swears + " times!",
+            "Jeepers, you cursed " + swears + " times!",
             "What a potty-mouth!",
             "Do you kiss your mother with that mouth?",
             "Ugh, such filthy language!",
@@ -123,6 +123,12 @@ chrome.runtime.onInstalled.addListener(function() {
       if (storageChange.newValue>=2){
         chrome.storage.sync.set({sworeTooManyTimes: true}, function() {
         console.log('YOU SWORE TOO MANY TIMES');
+
+        // chrome.extension.sendRequest(chrome.extension.getURL("swearingisbad.html"));
+
+        chrome.tabs.update({
+             url: chrome.extension.getURL("swearingisbad.html")
+        });
         });
       } else{
         chrome.storage.sync.set({sworeTooManyTimes:false}, function(){
