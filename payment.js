@@ -4,7 +4,7 @@ var swears = chrome.storage.sync.get(['num_swears'], function(result) {
 });
 
 // Render the PayPal button
-
+window.onload = function() {
 paypal.Button.render({
 
     // Set your environment
@@ -59,3 +59,4 @@ paypal.Button.render({
     }
 
 }, '#paypal-button-container');
+};

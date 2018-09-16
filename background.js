@@ -196,15 +196,31 @@ chrome.runtime.onInstalled.addListener(function() {
 	  	["requestBody"]
 	);
 
-
+	var whitelistedURLs = ["https://www.paypalobjects.com",
+						   "https://www.paypal.com",
+						   "chrome-extension://",
+						   "https://www.sandbox.paypal.com"];
 	chrome.webRequest.onBeforeRequest.addListener(
   		function(details){
 
   			chrome.storage.sync.get(['sworeTooManyTimes'], function(result){
   				redirect = result.sworeTooManyTimes
   			});
-  			if(redirect === true){
-  				return {redirectUrl:  chrome.extension.getURL("swearingisbad.html")};
+  			if(details.url in whitelistedURLs) {
+  				console.log("GOOD: " + details.url);
+  			} else {
+  				console.log("BAD: " + details.url);
+  			}
+  			if(redirect === true) {
+  				var notWhiteListed = true;
+  				for (i in whitelistedURLs) {
+  					if (details.url.indexOf(whitelistedURLs[i]) === 0) {
+  						notWhiteListed = false;
+  					}
+  				}
+  				if (notWhiteListed) {
+	  				return {redirectUrl:  chrome.extension.getURL("swearingisbad.html")};
+	  			}
   			}
   		},
 	  	{urls: ["<all_urls>"]},
