@@ -9,75 +9,80 @@
 
 
 <body>
-<h1 class = "text-center"> uh oh! your swear jar is full! </h1> 
+<div style="align: center;">
+    <div style="text-align: center; margin: auto;">
+        <h1 id="jar-message" class="text-center"> Your swear jar still has a bit of space left. For now...</h1> 
+        <img id="jar-image" src="images/jar-empty.jpg">
+    	<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+        <div id="paypal-button-container"></div>
+        <script src="emptiness.js"></script>
+        <script src="payment.js"></script>
+    </div>
+        <!-- <script>
+            var swears = chrome.storage.sync.get(['num_swears'], function(result) {
+              var newValue = result.num_swears;
+              console.log(newValue);
+            });
 
-	<script src="https://www.paypalobjects.com/api/checkout.js"></script>
-    <div id="paypal-button-container"></div>
-    <script src="payment.js"></script>
-    <!-- <script>
-        var swears = chrome.storage.sync.get(['num_swears'], function(result) {
-          var newValue = result.num_swears;
-          console.log(newValue);
-        });
+            // Render the PayPal button
 
-        // Render the PayPal button
+            paypal.Button.render({
 
-        paypal.Button.render({
+                // Set your environment
 
-            // Set your environment
+                env: 'sandbox', // sandbox | production
 
-            env: 'sandbox', // sandbox | production
+                // Specify the style of the button
 
-            // Specify the style of the button
+                style: {
+                    layout: 'vertical',  // horizontal | vertical
+                    size:   'medium',    // medium | large | responsive
+                    shape:  'rect',      // pill | rect
+                    color:  'gold'       // gold | blue | silver | black
+                },
 
-            style: {
-                layout: 'vertical',  // horizontal | vertical
-                size:   'medium',    // medium | large | responsive
-                shape:  'rect',      // pill | rect
-                color:  'gold'       // gold | blue | silver | black
-            },
+                // Specify allowed and disallowed funding sources
+                //
+                // Options:
+                // - paypal.FUNDING.CARD
+                // - paypal.FUNDING.CREDIT
+                // - paypal.FUNDING.ELV
 
-            // Specify allowed and disallowed funding sources
-            //
-            // Options:
-            // - paypal.FUNDING.CARD
-            // - paypal.FUNDING.CREDIT
-            // - paypal.FUNDING.ELV
+                funding: {
+                    allowed: [ paypal.FUNDING.CARD, paypal.FUNDING.CREDIT ],
+                    disallowed: [ ]
+                },
 
-            funding: {
-                allowed: [ paypal.FUNDING.CARD, paypal.FUNDING.CREDIT ],
-                disallowed: [ ]
-            },
+                // PayPal Client IDs - replace with your own
+                // Create a PayPal app: https://developer.paypal.com/developer/applications/create
 
-            // PayPal Client IDs - replace with your own
-            // Create a PayPal app: https://developer.paypal.com/developer/applications/create
+                client: {
+                    sandbox:    'AfzxtDnQv37HIFrsofPV0iNDE96VuusLvSYPmHlRnpwv3jUPAEiOuD7lxFXZuer3odkkUjxBN6QVa45V',
+                    production: 'AfzxtDnQv37HIFrsofPV0iNDE96VuusLvSYPmHlRnpwv3jUPAEiOuD7lxFXZuer3odkkUjxBN6QVa45V'
+                },
 
-            client: {
-                sandbox:    'AfzxtDnQv37HIFrsofPV0iNDE96VuusLvSYPmHlRnpwv3jUPAEiOuD7lxFXZuer3odkkUjxBN6QVa45V',
-                production: 'AfzxtDnQv37HIFrsofPV0iNDE96VuusLvSYPmHlRnpwv3jUPAEiOuD7lxFXZuer3odkkUjxBN6QVa45V'
-            },
+                payment: function(data, actions) {
+                    return actions.payment.create({
+                        payment: {
+                            transactions: [
+                                {
+                                    amount: { total: '0.01', currency: 'USD' }
+                                }
+                            ]
+                        }
+                    });
+                },
 
-            payment: function(data, actions) {
-                return actions.payment.create({
-                    payment: {
-                        transactions: [
-                            {
-                                amount: { total: '0.01', currency: 'USD' }
-                            }
-                        ]
-                    }
-                });
-            },
+                onAuthorize: function(data, actions) {
+                    return actions.payment.execute().then(function() {
+                        window.alert('Payment Complete!');
+                    });
+                }
 
-            onAuthorize: function(data, actions) {
-                return actions.payment.execute().then(function() {
-                    window.alert('Payment Complete!');
-                });
-            }
+            }, '#paypal-button-container');
 
-        }, '#paypal-button-container');
-
-    </script> -->
+        </script> -->
+    </div>
 </body>
 
 </html>

@@ -5,7 +5,7 @@
 "permissions": ["activeTab", "declarativeContent", "storage", "webRequest", "*://*/*", "notifications", "http://*/*", "https://*/*", "webRequestBlocking", "tabs"],
 "options_page": "options.html",
 "background": {
-  "scripts": ["background.js", "notif.js"],
+  "scripts": ["background.js", "notif.js", "emptiness.js"],
   "persistent": true
 },
 "content_security_policy": "script-src 'self' https://www.paypal.com https://www.paypalobjects.com 'sha256-LKKg1Vh3S9JSrCl7wK2GqaUPxWT1gn4Fu/CAUdVYJIU=' 'sha256-QxDd7xFukk2bf+v4KTMQ7sGwi2ic2sczh7zupXZAZQg='; object-src 'self'",

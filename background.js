@@ -1,5 +1,3 @@
-
-
 var parseRawData = function(data) {
 	// data is 
 	// console.log(data[d]['bytes']);
@@ -30,7 +28,7 @@ rawFile.send();
 
 var countNumSwears = function(targetString) {
 	var lowerCaseString = targetString.toLowerCase()
-	console.log("countNumSwears: " + lowerCaseString);
+	// console.log("countNumSwears: " + lowerCaseString);
 	var count = 0;
 	var compressTargetString = compressString(lowerCaseString)
 
@@ -206,11 +204,6 @@ chrome.runtime.onInstalled.addListener(function() {
   			chrome.storage.sync.get(['sworeTooManyTimes'], function(result){
   				redirect = result.sworeTooManyTimes
   			});
-  			if(details.url in whitelistedURLs) {
-  				console.log("GOOD: " + details.url);
-  			} else {
-  				console.log("BAD: " + details.url);
-  			}
   			if(redirect === true) {
   				var notWhiteListed = true;
   				for (i in whitelistedURLs) {
@@ -226,5 +219,4 @@ chrome.runtime.onInstalled.addListener(function() {
 	  	{urls: ["<all_urls>"]},
 	  	["blocking"]
 	);
-
 });
