@@ -18,6 +18,11 @@ var updateState = function(isFull){
             var cost = result.num_swears / 100;
             costMessage.innerHTML = "Buy a bar of soap for $" + cost + "?";
         })
+    } else {
+        chrome.storage.sync.get(['num_swears'], function(result) {
+            var cost = result.num_swears / 100;
+            costMessage.innerHTML = "There's currently $" + cost + " in your swear jar.";
+        })
     }
 }
 
