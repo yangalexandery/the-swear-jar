@@ -55,6 +55,7 @@ paypal.Button.render({
     onAuthorize: function(data, actions) {
         return actions.payment.execute().then(function() {
             window.alert('Payment Complete!');
+            chrome.storage.sync.set({'sworeTooManyTimes': false, 'num_swears': 0}, function(){});
         });
     }
 
