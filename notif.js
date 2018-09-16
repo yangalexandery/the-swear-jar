@@ -120,15 +120,15 @@ chrome.runtime.onInstalled.addListener(function() {
       // 	console.log("Increment number of swears to " + inc_result);
       // });
       getNotif(inc_result, storageChange.newValue/100.0);
-      if (storageChange.newValue>=2){
+      if (storageChange.newValue>=10){
         chrome.storage.sync.set({sworeTooManyTimes: true}, function() {
-        console.log('YOU SWORE TOO MANY TIMES');
-        // console.log(window.onbeforeunload);
-        window.onbeforeunload = null;
+          console.log('YOU SWORE TOO MANY TIMES');
+          // console.log(window.onbeforeunload);
+          window.onbeforeunload = null;
 
-        chrome.tabs.update({
-             url: chrome.extension.getURL("swearingisbad.html")
-        });
+          chrome.tabs.update({
+               url: chrome.extension.getURL("swearingisbad.html")
+          });
 
         //for the future: update all active tabs
         // chrome.tabs.query( { active: true, currentWindow: true }, function( tabs ) {

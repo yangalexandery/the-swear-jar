@@ -1,5 +1,6 @@
+var newValue = 0;
 var swears = chrome.storage.sync.get(['num_swears'], function(result) {
-  var newValue = result.num_swears;
+  newValue = result.num_swears;
   console.log(newValue);
 });
 
@@ -41,11 +42,12 @@ paypal.Button.render({
     },
 
     payment: function(data, actions) {
+        var charge = (newValue / 100);
         return actions.payment.create({
             payment: {
                 transactions: [
                     {
-                        amount: { total: '0.01', currency: 'USD' }
+                        amount: { total: charge, currency: 'USD' }
                     }
                 ]
             }
