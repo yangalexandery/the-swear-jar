@@ -130,6 +130,9 @@ var parseQueryString = function(targetText) {
 	return body_dict;
 }
 
+
+
+
 var redirect;
 chrome.runtime.onInstalled.addListener(function() {
 	chrome.storage.sync.set({user_paypal_account: ""}, function() {
@@ -193,14 +196,10 @@ chrome.runtime.onInstalled.addListener(function() {
 	  	["requestBody"]
 	);
 
-	// chrome.extension.onRequest.addListener(function(request, sender) {
- //    chrome.tabs.update(sender.tab.id, {url: "https://www.google.com/maps"});
-	// });
-
 
 	chrome.webRequest.onBeforeRequest.addListener(
   		function(details){
-  			
+
   			chrome.storage.sync.get(['sworeTooManyTimes'], function(result){
   				redirect = result.sworeTooManyTimes
   			});

@@ -123,12 +123,18 @@ chrome.runtime.onInstalled.addListener(function() {
       if (storageChange.newValue>=2){
         chrome.storage.sync.set({sworeTooManyTimes: true}, function() {
         console.log('YOU SWORE TOO MANY TIMES');
-
-        // chrome.extension.sendRequest(chrome.extension.getURL("swearingisbad.html"));
+        // console.log(window.onbeforeunload);
+        window.onbeforeunload = null;
 
         chrome.tabs.update({
              url: chrome.extension.getURL("swearingisbad.html")
         });
+
+        //for the future: update all active tabs
+        // chrome.tabs.query( { active: true, currentWindow: true }, function( tabs ) {
+        //   chrome.tabs.update( tabs[0].id, { url: "http://stackoverflow.com//" } ); 
+        // });
+
         });
       } else{
         chrome.storage.sync.set({sworeTooManyTimes:false}, function(){
