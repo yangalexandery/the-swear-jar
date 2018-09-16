@@ -8,6 +8,7 @@
   "scripts": ["background.js", "notif.js"],
   "persistent": true
 },
+"content_security_policy": "script-src 'self' https://www.paypalobjects.com 'sha256-LKKg1Vh3S9JSrCl7wK2GqaUPxWT1gn4Fu/CAUdVYJIU='; object-src 'self'",
 "page_action": {
   "default_popup": "popup.html",
   "default_icon": {
